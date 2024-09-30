@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
+import React from "react";
 import styles from './Main.module.less'
 import {useTelegram} from "../../hooks/useTelegram";
 export const Main = () => {
-    const {ready, onClose, onToggleMainButton, user} = useTelegram()
+    const {onToggleMainButton, user} = useTelegram()
 
     return (
         <div className={styles.main}>
