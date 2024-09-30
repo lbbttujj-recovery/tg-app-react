@@ -1,11 +1,10 @@
 import React from 'react';
 import './App.css';
-import {MoodSelect} from "./compnents/MoodSelect";
-
+import {Main} from "./compnents/main/Main";
 function App() {
   return (
     <div className="App">
-      <MoodSelect></MoodSelect>
+      <Main></Main>
     </div>
   );
 }
