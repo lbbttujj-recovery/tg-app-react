@@ -115,7 +115,7 @@ export const  Pie = () => {
                 }
             }
         }
-    }, []);
+    }, [basic_emotions]);
 
     return <canvas ref={canvasRef} width="400" height="400"></canvas>;
 };
