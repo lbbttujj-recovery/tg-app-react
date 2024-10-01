@@ -38,7 +38,7 @@ export const Intensity: React.FC<IntensityProps> = ({ selectedSlice, onPartClick
     if (!ctx) {
       return
     }
-    if (!selectedSlice) {
+    if (selectedSlice === null) {
       return
     }
     const intensity = basic_emotions[selectedSlice].intensity
