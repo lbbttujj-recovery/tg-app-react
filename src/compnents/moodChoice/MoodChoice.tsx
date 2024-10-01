@@ -18,21 +18,23 @@ export const MoodChoice = () => {
         'Content-Type': 'application/json',
       },
     }) // @ts-ignore
-      .then((res: string) => {
-        setImageUrl(res)
-        setIsLoading(false)
+      .then((res) => {
+        res.text().then((data) => {
+          setImageUrl(data)
+        })
       })
       .catch((error) => {
         console.log(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
       })
   }
 
   return (
     <div className={styles.moodChoiceContainer}>
       {isLoading && <p>Загрузка...</p>}
-      {imageUrl && (
-        <img alt="gpt" onClick={() => setImageUrl('')} src={imageUrl} style={{ position: 'absolute' }} width="100%" height="100%" />
-      )}
+      {imageUrl && <img alt="gpt" onClick={() => setImageUrl('')} src={imageUrl} style={{ position: 'absolute' }} width="100%" />}
       {selectedSlice === null ? <p>Выбери</p> : <Intensity selectedSlice={selectedSlice} onPartClick={onClickPart} />}
       <Pie setSelectedSlice={setSelectedSlice} />
     </div>
