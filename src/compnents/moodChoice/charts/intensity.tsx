@@ -3,6 +3,7 @@ import { moodData } from './moodData'
 
 type IntensityProps = {
   selectedSlice: number | null
+  // eslint-disable-next-line no-unused-vars
   onPartClick: (part: string) => void
 }
 

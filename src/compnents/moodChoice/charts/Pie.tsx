@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { moodData } from './moodData'
 
 type PieProps = {
+  // eslint-disable-next-line no-unused-vars
   setSelectedSlice: (i: number) => void
 }
 
