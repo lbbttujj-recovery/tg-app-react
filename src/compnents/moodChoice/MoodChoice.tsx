@@ -11,7 +11,7 @@ export const MoodChoice = () => {
   const onClickPart = (part: string) => {
     setSelectedSlice(null)
     setIsLoading(true)
-    fetch('http://localhost:8000/create-image', {
+    fetch('http://194.135.105.154:8000/create-image', {
       method: 'POST',
       body: JSON.stringify({ mood: part }),
       headers: {
