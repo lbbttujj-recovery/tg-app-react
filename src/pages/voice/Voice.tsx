@@ -8,7 +8,8 @@ export const Voice = () => {
   const [voices, setVoices] = useState<string[]>([])
   const { onClose } = useTelegram()
   const [summarizeVoice, setSummarizeVoice] = useState<string>()
-  const backUrl = useBackUrl()
+  // const backUrl = useBackUrl()
+  const backUrl = 'https://lbbttujj.online'
 
   useEffect(() => {
     axios.get(`${backUrl}/getVoices`).then((res: AxiosResponse<string[]>) => {
