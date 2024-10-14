@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import { Mood, Voice } from './compnents'
+import { Mood, Voice } from './pages'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {

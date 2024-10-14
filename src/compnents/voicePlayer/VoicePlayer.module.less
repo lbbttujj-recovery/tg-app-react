@@ -1,0 +1,51 @@
+@import "../../variables.module";
+
+
+.playerContainer {
+  position: relative;
+  height: 50px;
+  width: calc(100% - 70px);
+  margin-bottom: 20px;
+  margin-left: 25px;
+  flex-shrink: 0;
+
+  .playButton {
+    position: absolute;
+    left: -20px;
+    top: 3px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #000000;
+
+    .playImage {
+      position: relative;
+      left: 2px;
+    }
+  }
+
+  .durationNumber {
+    position: absolute;
+    right: -40px;
+    top: 10px;
+  }
+
+  .player {
+    border-radius: 16px;
+    margin-left: 50px;
+    height: 100%;
+    border: 1px solid black;
+    padding: 8px 10px;
+    overflow: hidden;
+    position: relative;
+
+    .duration {
+      background-color: @primary-color;
+      width: 15px;
+      height: 100%;
+      position: absolute;
+      left: -10px;
+      top: 0;
+    }
+  }
+}

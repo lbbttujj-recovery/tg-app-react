@@ -282,6 +282,7 @@ module.exports = function (webpackEnv) {
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
+        hooks: path.resolve(__dirname, 'src/hooks'),
         'react-native': 'react-native-web',
         // Allows for better profiling with ReactDevTools
         ...(isEnvProductionProfile && {
@@ -531,6 +532,9 @@ module.exports = function (webpackEnv) {
     },
     plugins: [
       // Generates an `index.html` file with the <script> injected.
+      new webpack.ProvidePlugin({
+        Buffer: ['buffer', 'Buffer'], // Обеспечиваем доступ к Buffer
+      }),
       new HtmlWebpackPlugin(
         Object.assign(
           {},

@@ -1,0 +1,44 @@
+@import "../../variables.module";
+
+.container {
+  width: 100%;
+
+  .players {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 50vh;
+    overflow-y: auto;
+    border: 1px solid black;
+    padding: 20px 5px;
+    flex-flow: wrap;
+  }
+
+  .SummarizePlayer {
+    font-size: 16px;
+    width: 95%;
+    margin: auto;
+  }
+
+  .Button {
+    font-weight: 500;
+    display: flex;
+    appearance: none;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    background-color: @primary-color;
+    border-radius: 40px;
+    content: 'Удалить';
+    color: white;
+    max-width: 40%;
+  }
+
+  .deleteButton {
+    position: relative;
+    top: 40px;
+    margin: auto;
+    width: 40%;
+  }
+}

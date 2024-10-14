@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { Pie } from './charts/Pie'
 import { Intensity } from './charts/intensity'
 import styles from './MoodChoice.module.less'
-
-const URL = process.env.REACT_APP_ENV === 'production' ? process.env.REACT_APP_API_URL : process.env.REACT_APP_API_URL_DEV
+import { useBackUrl } from '../../hooks'
 
 export const MoodChoice = () => {
   const [selectedSlice, setSelectedSlice] = useState<number | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const URL = useBackUrl()
   const [imageUrl, setImageUrl] = useState('')
 
   const onClickPart = (part: string) => {

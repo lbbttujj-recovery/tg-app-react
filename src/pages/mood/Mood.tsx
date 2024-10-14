@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './Mood.module.less'
-import { useTelegram } from '../../hooks/useTelegram'
-import { MoodChoice } from '../moodChoice/MoodChoice'
+import { useTelegram } from '../../hooks'
+import { MoodChoice } from '../../compnents/moodChoice/MoodChoice'
 export const Mood = () => {
   const { onToggleMainButton, user } = useTelegram()
 
