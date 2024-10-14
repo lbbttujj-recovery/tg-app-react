@@ -1,10 +1,18 @@
 import React from 'react'
 import './App.css'
-import { Main } from './compnents/main/Main'
+import { Mood, Voice } from './compnents'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+
 function App() {
   return (
     <div className="App">
-      <Main></Main>
+      <Router>
+        <Routes>
+          <Route path="/" element={<p>home</p>} />
+          <Route path="/mood" element={<Mood />} />
+          <Route path="/voice" element={<Voice />} />
+        </Routes>
+      </Router>
     </div>
   )
 }

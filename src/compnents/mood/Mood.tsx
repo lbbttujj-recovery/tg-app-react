@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
-import styles from './Main.module.less'
+import React from 'react'
+import styles from './Mood.module.less'
 import { useTelegram } from '../../hooks/useTelegram'
 import { MoodChoice } from '../moodChoice/MoodChoice'
-export const Main = () => {
+export const Mood = () => {
   const { onToggleMainButton, user } = useTelegram()
 
   return (
