@@ -7,6 +7,7 @@ import { useBackUrl } from '../../hooks'
 export const MoodChoice = () => {
   const [selectedSlice, setSelectedSlice] = useState<number | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [custom, setCustom] = useState('')
   const URL = useBackUrl()
   const [imageUrl, setImageUrl] = useState('')
 
@@ -36,6 +37,13 @@ export const MoodChoice = () => {
   return (
     <div className={styles.moodChoiceContainer}>
       {isLoading && <p>Загрузка...</p>}
+      <p>Ввести самому</p>
+      <div style={{ display: 'flex', marginBottom: '50px' }}>
+        <input style={{ height: '50px', width: '250px' }} value={custom} onChange={(event) => setCustom(event.target.value)} />
+        <button onClick={() => onClickPart(custom)} style={{ marginLeft: '20px' }}>
+          Ввести
+        </button>
+      </div>
       {imageUrl ? (
         <img alt="gpt" onClick={() => setImageUrl('')} src={imageUrl} style={{ position: 'absolute' }} width="100%" />
       ) : (
