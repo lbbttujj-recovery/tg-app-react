@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios, { AxiosResponse } from 'axios'
 import clsx from 'classnames'
-import { useBackUrl, useTelegram } from '../../hooks'
+import { useTelegram } from '../../hooks'
 import styles from './Voice.module.less'
 import { VoicePlayer } from '../../compnents/voicePlayer/VoicePlayer'
 export const Voice = () => {
