@@ -14,7 +14,7 @@ export const MoodChoice = () => {
   const onClickPart = (part: string) => {
     setSelectedSlice(null)
     setIsLoading(true)
-    fetch(`${URL}/create-image`, {
+    fetch(`${URL}/mood/create-image`, {
       method: 'POST',
       body: JSON.stringify({ mood: part }),
       headers: {

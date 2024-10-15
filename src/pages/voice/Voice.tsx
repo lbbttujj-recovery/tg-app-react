@@ -14,10 +14,10 @@ export const Voice = () => {
   // const backUrl = 'https://lbbttujj.online'
 
   useEffect(() => {
-    axios.get(`${backUrl}/getVoices`).then((res: AxiosResponse<string[]>) => {
+    axios.get(`${backUrl}/voice/getVoices`).then((res: AxiosResponse<string[]>) => {
       res.data.forEach((voiceName) => {
         axios
-          .get(`${backUrl}/getVoices/name`, { headers: { name: voiceName }, responseType: 'arraybuffer' })
+          .get(`${backUrl}/voice/getVoices/name`, { headers: { name: voiceName }, responseType: 'arraybuffer' })
           .then((response) => {
             const audioData = response.data // Полученные данные в виде массива байт
             const blob = new Blob([audioData], { type: 'audio/mpeg' })
@@ -35,7 +35,7 @@ export const Voice = () => {
   }, [])
 
   const getSum = () => {
-    axios.get(`${backUrl}/getSum`, { responseType: 'arraybuffer' }).then((response) => {
+    axios.get(`${backUrl}/voice/getSum`, { responseType: 'arraybuffer' }).then((response) => {
       const audioData = response.data
       const blob = new Blob([audioData], { type: 'audio/mpeg' })
       const audioUrl = URL.createObjectURL(blob)
@@ -45,20 +45,20 @@ export const Voice = () => {
   }
 
   const deleteHandler = () => {
-    axios.delete(`${backUrl}/delete`).then(() => {
+    axios.delete(`${backUrl}/voice/delete`).then(() => {
       console.log('удалено')
       onClose()
     })
   }
 
   const speechToText = () => {
-    axios.get(`${backUrl}/speechToText`).then((response: AxiosResponse<string>) => {
+    axios.get(`${backUrl}/voice/speechToText`).then((response: AxiosResponse<string>) => {
       setTextFromVoice(response.data)
     })
   }
 
   const briefHandler = () => {
-    axios.get(`${backUrl}/brief`).then((response: AxiosResponse<string>) => {
+    axios.get(`${backUrl}/voice/brief`).then((response: AxiosResponse<string>) => {
       setBrief(response.data)
     })
   }
