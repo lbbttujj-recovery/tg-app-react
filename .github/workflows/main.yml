@@ -57,6 +57,10 @@ jobs:
     steps:
       - name: Get repository code
         uses: actions/checkout@v4.2.1
+      - name: Install Node js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
       - name: Get Build
         uses: actions/download-artifact@v3
         with:
