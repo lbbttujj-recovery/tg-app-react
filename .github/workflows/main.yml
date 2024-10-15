@@ -5,7 +5,7 @@ on:
     branches:
       - main
     path-ignore:
-      - '.github/workflows/*'
+      - './github/workflows/*'
 jobs:
   lint:
     runs-on: ubuntu-latest
