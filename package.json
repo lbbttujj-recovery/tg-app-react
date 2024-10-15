@@ -81,7 +81,8 @@
     "dev": "cross-env REACT_APP_ENV=development node scripts/start.js",
     "start": "cross-env  REACT_APP_ENV=production node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "lint": "eslint src/**/*.{ts,tsx}"
   },
   "eslintConfig": {
     "extends": [
