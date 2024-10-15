@@ -45,9 +45,8 @@ export const Voice = () => {
   }
 
   const deleteHandler = () => {
-    axios.post(`${backUrl}/delete`).then(() => {
+    axios.delete(`${backUrl}/delete`).then(() => {
       console.log('удалено')
-      window.location.reload()
       onClose()
     })
   }
