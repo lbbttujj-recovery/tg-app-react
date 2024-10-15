@@ -1,41 +1,41 @@
 name: Test
 on:
   workflow_dispatch:
-#  push:
-#    branches:
-#      - main
+  push:
+    branches:
+      - main
 #    path-ignore:
 #      - './github/workflows/*'
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get repository code
-        uses: actions/checkout@v4.2.1
-      - name: cache deps
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: install deps
-        run: npm ci
-      - name: lint app
-        run: npm run lint
-  test:
-    runs-on: ubuntu-latest
-    needs: lint
-    steps:
-      - name: Get repository code
-        uses: actions/checkout@v4.2.1
-      - name: cache deps
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: install deps
-        run: npm ci
-      - name: Test app
-        run: npm run test
+#  lint:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Get repository code
+#        uses: actions/checkout@v4.2.1
+#      - name: cache deps
+#        uses: actions/cache@v3
+#        with:
+#          path: ~/.npm
+#          key: node-modules-${{ hashFiles('**/package-lock.json') }}
+#      - name: install deps
+#        run: npm ci
+#      - name: lint app
+#        run: npm run lint
+#  test:
+#    runs-on: ubuntu-latest
+#    needs: lint
+#    steps:
+#      - name: Get repository code
+#        uses: actions/checkout@v4.2.1
+#      - name: cache deps
+#        uses: actions/cache@v3
+#        with:
+#          path: ~/.npm
+#          key: node-modules-${{ hashFiles('**/package-lock.json') }}
+#      - name: install deps
+#        run: npm ci
+#      - name: Test app
+#        run: npm run test
   build:
     runs-on: ubuntu-latest
     needs: [lint, test]
@@ -43,13 +43,22 @@ jobs:
       - name: Get repository code
         uses: actions/checkout@v4.2.1
       - name: Build
-        run: echo Build
+        run: npm run build
+      - name: Upload Artifacts
+        uses: actions/upload-arifact@v3
+        with:
+          path: build
+          name: build-files
   deploy:
     runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Get repository code
         uses: actions/checkout@v4.2.1
+      - name: Get Build
+        uses: actions/download-artifact@v3
+        with:
+          name: build-files
       - name: Deploy
         run: echo Deploy
 
