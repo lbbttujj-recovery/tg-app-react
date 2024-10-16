@@ -1,48 +1,41 @@
 import React, { useEffect, useState } from 'react'
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import clsx from 'classnames'
-import { useBackUrl, useTelegram } from '../../hooks'
+import { useAppDispatch, useAppSelector, useBackUrl, useTelegram } from '../../hooks'
 import styles from './Voice.module.less'
 import { VoicePlayer } from '../../compnents/voicePlayer/VoicePlayer'
+import { ReactComponent as DeleteBin } from '../../img/delete.svg'
+import { brief, getSum, getVoices, speechToText } from '../../store/voices/actions'
+import { Loader } from '../../compnents/loader/Loader'
+
+type ModeType = 'all' | 'brief'
+
 export const Voice = () => {
-  const [voices, setVoices] = useState<string[]>([])
   const { onClose } = useTelegram()
-  const [summarizeVoice, setSummarizeVoice] = useState<string>()
-  const [textFromVoice, setTextFromVoice] = useState('')
-  const [brief, setBrief] = useState('')
+  const [activeMode, setActiveMode] = useState<ModeType>('all')
   const backUrl = useBackUrl()
-  // const backUrl = 'https://lbbttujj.online'
+
+  const voicesRequest = useAppSelector((state) => state.voice.voicesNames)
+  const voiceSumRequest = useAppSelector((state) => state.voice.voiceSum)
+  const speechToTextRequest = useAppSelector((state) => state.voice.speechToText)
+  const briefRequest = useAppSelector((state) => state.voice.brief)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    axios.get(`${backUrl}/voice/getVoices`).then((res: AxiosResponse<string[]>) => {
-      res.data.forEach((voiceName) => {
-        axios
-          .get(`${backUrl}/voice/getVoices/name`, { headers: { name: voiceName }, responseType: 'arraybuffer' })
-          .then((response) => {
-            const audioData = response.data // Полученные данные в виде массива байт
-            const blob = new Blob([audioData], { type: 'audio/mpeg' })
-            const audioUrl = URL.createObjectURL(blob) // Создаем URL для аудиофайла
-            setVoices((prev) => [...prev, audioUrl])
-          })
-          .catch((error) => {
-            console.error('Ошибка при получении аудиофайла:', error)
-          })
-      })
-    })
-    return () => {
-      setVoices([])
-    }
-  }, [])
+    dispatch(getVoices())
+  }, [dispatch])
 
-  const getSum = () => {
-    axios.get(`${backUrl}/voice/getSum`, { responseType: 'arraybuffer' }).then((response) => {
-      const audioData = response.data
-      const blob = new Blob([audioData], { type: 'audio/mpeg' })
-      const audioUrl = URL.createObjectURL(blob)
-      console.log(audioUrl)
-      setSummarizeVoice(audioUrl)
-    })
-  }
+  useEffect(() => {
+    if (voicesRequest.status === 'success') {
+      dispatch(getSum())
+    }
+  }, [dispatch, voicesRequest])
+
+  useEffect(() => {
+    if (voiceSumRequest.status === 'success') {
+      dispatch(speechToText())
+    }
+  }, [dispatch, voiceSumRequest])
 
   const deleteHandler = () => {
     axios.delete(`${backUrl}/voice/delete`).then(() => {
@@ -51,60 +44,47 @@ export const Voice = () => {
     })
   }
 
-  const speechToText = () => {
-    axios.get(`${backUrl}/voice/speechToText`).then((response: AxiosResponse<string>) => {
-      setTextFromVoice(response.data)
-    })
+  const speechToTextHandler = () => {
+    setActiveMode('all')
   }
 
   const briefHandler = () => {
-    axios.get(`${backUrl}/voice/brief`).then((response: AxiosResponse<string>) => {
-      setBrief(response.data)
-    })
+    if (!briefRequest.data) {
+      dispatch(brief())
+    }
+    setActiveMode('brief')
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.players}>
-        {voices.map((voice) => (
+        {voicesRequest.status === 'pending' && <Loader />}
+        {voicesRequest.data.map((voice) => (
           <VoicePlayer key={voice} src={voice} />
         ))}
       </div>
-      {summarizeVoice && (
+      {voiceSumRequest.data && (
         <div className={styles.SummarizePlayer}>
-          <VoicePlayer src={summarizeVoice} />
+          <VoicePlayer src={voiceSumRequest.data} />
         </div>
       )}
-      {textFromVoice && (
-        <div>
-          <h3>Это в целом:</h3>
-          <p>{textFromVoice}</p>
-        </div>
-      )}
-      {brief && (
-        <div>
-          <h3>Если в кратце: </h3>
-          <p>{brief}</p>
-        </div>
-      )}
-      <div className={clsx(styles.Button, styles.deleteButton)} onClick={getSum}>
-        <div onClick={getSum}>
-          <p>Получить все вместе</p>
-        </div>
+      <div className={clsx(styles.deleteButton)} onClick={deleteHandler}>
+        <DeleteBin width={'35px'} height={'35px'} />
       </div>
-      <div className={clsx(styles.Button, styles.deleteButton)}>
-        <div onClick={deleteHandler}>
-          <p>Удалить</p>
-        </div>
-      </div>
-      <div className={clsx(styles.Button, styles.deleteButton)}>
-        <div onClick={speechToText}>
-          <p>Распознать</p>
-        </div>
-      </div>
-      <div className={clsx(styles.Button, styles.deleteButton)}>
-        <div onClick={briefHandler}>
-          <p>Пересказать</p>
+      <div className={styles.content}>
+        {(briefRequest.status === 'pending' || speechToTextRequest.status === 'pending') && <Loader />}
+        <div>{activeMode === 'all' ? <p>{speechToTextRequest.data}</p> : <p>{briefRequest.data}</p>}</div>
+        <div className={styles.tabs}>
+          <div className={clsx(styles.tabButton, activeMode === 'all' && styles.active)} onClick={speechToTextHandler}>
+            <div>
+              <p>Распознать</p>
+            </div>
+          </div>
+          <div className={clsx(styles.tabButton, activeMode === 'brief' && styles.active)} onClick={briefHandler}>
+            <div>
+              <p>Пересказать</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
