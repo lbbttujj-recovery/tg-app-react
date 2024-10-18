@@ -22,6 +22,12 @@ export const brief = createAsyncThunk<string, void>('voice/brief', async () => {
   return response.data
 })
 
+export const deleteAll = createAsyncThunk<string, void>('voice/deleteAll', async () => {
+  const backUrl = useBackUrl()
+  const response = await axios.delete(`${backUrl}/voice/delete`)
+  return response.data
+})
+
 export const getVoices = createAsyncThunk<string[], void>('voice/getVoices', async () => {
   const backUrl = useBackUrl()
   const voicesName = (await axios.get(`${backUrl}/voice/getVoices`)) as AxiosResponse<string[]>

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { brief, getSum, getVoices, speechToText } from './actions'
+import { brief, deleteAll, getSum, getVoices, speechToText } from './actions'
 
 type Status = 'success' | 'pending' | 'error' | null
 
@@ -20,6 +20,10 @@ type initialStateType = {
     status: Status
     data: string
   }
+  deleteAll: {
+    status: Status
+    data: boolean
+  }
 }
 
 const initialState: initialStateType = {
@@ -38,6 +42,10 @@ const initialState: initialStateType = {
   brief: {
     status: null,
     data: '',
+  },
+  deleteAll: {
+    status: null,
+    data: false,
   },
 }
 
@@ -88,6 +96,17 @@ export const voiceSlice = createSlice({
     builder.addCase(brief.fulfilled, (state, action) => {
       state.brief.status = 'success'
       state.brief.data = action.payload
+    })
+
+    builder.addCase(deleteAll.pending, (state) => {
+      state.deleteAll.status = 'pending'
+    })
+    builder.addCase(deleteAll.rejected, (state) => {
+      state.deleteAll.status = 'error'
+    })
+    builder.addCase(deleteAll.fulfilled, (state) => {
+      state.deleteAll.status = 'success'
+      state.deleteAll.data = true
     })
   },
 })

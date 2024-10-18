@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import clsx from 'classnames'
-import { useAppDispatch, useAppSelector, useBackUrl, useTelegram } from '../../hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 import styles from './Voice.module.less'
 import { VoicePlayer } from '../../compnents/voicePlayer/VoicePlayer'
 import { ReactComponent as DeleteBin } from '../../img/delete.svg'
-import { brief, getSum, getVoices, speechToText } from '../../store/voices/actions'
+import { brief, deleteAll, getSum, getVoices, speechToText } from '../../store/voices/actions'
 import { Loader } from '../../compnents/loader/Loader'
 
-type ModeType = 'all' | 'brief'
+type ModeType = 'all' | 'brief' | 'deleted'
 
 export const Voice = () => {
-  const { onClose } = useTelegram()
+  // const { onClose } = useTelegram()
   const [activeMode, setActiveMode] = useState<ModeType>('all')
-  const backUrl = useBackUrl()
 
   const voicesRequest = useAppSelector((state) => state.voice.voicesNames)
   const voiceSumRequest = useAppSelector((state) => state.voice.voiceSum)
   const speechToTextRequest = useAppSelector((state) => state.voice.speechToText)
   const briefRequest = useAppSelector((state) => state.voice.brief)
+  const deleteRequest = useAppSelector((state) => state.voice.deleteAll)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -28,6 +27,7 @@ export const Voice = () => {
   useEffect(() => {
     if (voicesRequest.status === 'success') {
       dispatch(getSum())
+      console.log('ssss')
     }
   }, [dispatch, voicesRequest])
 
@@ -37,11 +37,16 @@ export const Voice = () => {
     }
   }, [dispatch, voiceSumRequest])
 
+  useEffect(() => {
+    if (deleteRequest.data) {
+      dispatch(getVoices())
+      dispatch(getSum())
+      setActiveMode('deleted')
+    }
+  }, [deleteRequest])
+
   const deleteHandler = () => {
-    axios.delete(`${backUrl}/voice/delete`).then(() => {
-      console.log('удалено')
-      onClose()
-    })
+    dispatch(deleteAll())
   }
 
   const speechToTextHandler = () => {
@@ -72,8 +77,15 @@ export const Voice = () => {
         <DeleteBin width={'35px'} height={'35px'} />
       </div>
       <div className={styles.content}>
-        {(briefRequest.status === 'pending' || speechToTextRequest.status === 'pending') && <Loader />}
-        <div>{activeMode === 'all' ? <p>{speechToTextRequest.data}</p> : <p>{briefRequest.data}</p>}</div>
+        {(briefRequest.status === 'pending' || speechToTextRequest.status === 'pending' || deleteRequest.status === 'pending') && (
+          <Loader />
+        )}
+        <div className={styles.contentText}>
+          {activeMode === 'all' && <p>{speechToTextRequest.data}</p>}
+          {activeMode === 'brief' && <p>{briefRequest.data}</p>}
+          {activeMode === 'deleted' && <p>Удалено, обнови бота</p>}
+          {/*{voicesRequest.status === 'deleted' && <p>Удалено, обнови бота</p>}*/}
+        </div>
         <div className={styles.tabs}>
           <div className={clsx(styles.tabButton, activeMode === 'all' && styles.active)} onClick={speechToTextHandler}>
             <div>
