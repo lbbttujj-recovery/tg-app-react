@@ -2,7 +2,8 @@ const tg = window.Telegram.WebApp
 
 export const useTelegram = () => {
   const onClose = () => {
-    tg.close()
+    // eslint-disable-next-line no-debugger
+    debugger
   }
 
   const onToggleMainButton = () => {
