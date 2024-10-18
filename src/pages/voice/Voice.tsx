@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import clsx from 'classnames'
-import { useAppDispatch, useAppSelector, useTelegram } from '../../hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 import styles from './Voice.module.less'
 import { VoicePlayer } from '../../compnents/voicePlayer/VoicePlayer'
 import { ReactComponent as DeleteBin } from '../../img/delete.svg'
@@ -10,7 +10,6 @@ import { Loader } from '../../compnents/loader/Loader'
 type ModeType = 'all' | 'brief' | 'deleted'
 
 export const Voice = () => {
-  const { onClose } = useTelegram()
   const [activeMode, setActiveMode] = useState<ModeType>('all')
 
   const voicesRequest = useAppSelector((state) => state.voice.voicesNames)
@@ -81,9 +80,10 @@ export const Voice = () => {
         <DeleteBin width={'35px'} height={'35px'} />
       </div>
       <div className={styles.content}>
-        {(briefRequest.status === 'pending' || speechToTextRequest.status === 'pending' || deleteRequest.status === 'pending') && (
-          <Loader />
-        )}
+        {(briefRequest.status === 'pending' ||
+          speechToTextRequest.status === 'pending' ||
+          deleteRequest.status === 'pending' ||
+          voiceSumRequest.status === 'pending') && <Loader />}
         <div className={styles.contentText}>
           {activeMode === 'all' && <p>{speechToTextRequest.data}</p>}
           {activeMode === 'brief' && <p>{briefRequest.data}</p>}
