@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Pie } from './charts/Pie'
 import { Intensity } from './charts/intensity'
 import styles from './MoodChoice.module.less'
-import { useBackUrl } from '../../hooks'
+import { useBackUrl } from '../../../hooks'
 
 export const MoodChoice = () => {
   const [selectedSlice, setSelectedSlice] = useState<number | null>(null)

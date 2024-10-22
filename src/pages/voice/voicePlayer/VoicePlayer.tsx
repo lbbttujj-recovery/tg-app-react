@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './VoicePlayer.module.less'
-import Play from '../../img/play.png'
+import Play from '../../../img/play.png'
 
 type VoicePlayerProps = {
   src: string

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { voiceReducer } from './voices/voiceSlice'
+import { gipnofobReducer } from './gipnofob/gipnofobSlice'
 
 export const store = configureStore({
   reducer: {
     voice: voiceReducer,
+    gipnofob: gipnofobReducer,
   },
 })
 
