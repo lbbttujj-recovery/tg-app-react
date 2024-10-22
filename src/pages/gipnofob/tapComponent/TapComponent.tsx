@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Gipnofob1 from '../../../img/gipnofob_1.jpg'
 import styles from './TapComponent.module.less'
 import { Score } from './score/Score'
