@@ -12,7 +12,7 @@ export const save = createAsyncThunk<string, { id: number; score: number }>('gip
   return response.data
 })
 
-export const checkSubscribe = createAsyncThunk<string, { id: number; groupId: number }>('gipnofob/save', async (params) => {
+export const checkSubscribe = createAsyncThunk<string, { id: number; groupId: number }>('gipnofob/subscribe', async (params) => {
   const backUrl = useBackUrl()
   const response = (await axios.post(`${backUrl}/api/gipnofob/checkSubscribe`, params, {
     headers: {
