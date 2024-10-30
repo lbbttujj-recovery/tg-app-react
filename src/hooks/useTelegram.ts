@@ -22,5 +22,6 @@ export const useTelegram = () => {
     onToggleMainButton,
     tg,
     user: tg.initDataUnsafe?.user?.username,
+    id: tg.initDataUnsafe?.user?.id,
   }
 }

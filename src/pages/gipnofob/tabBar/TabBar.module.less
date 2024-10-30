@@ -1,8 +1,10 @@
 .tabBar {
   position: absolute;
-  bottom: 0;
+  border-radius: 25px;
+  bottom: 5px;
+  left: 5px;
   height: 70px;
-  width: 100%;
+  width: calc(100% - 10px);
   background-color: #393939;
   display: flex;
 
@@ -25,7 +27,7 @@
 
   .activeTab {
     position: absolute;
-    left: 5px;
+    left: 0;
     width: calc(50% - 10px);
     height: 100%;
     background-color: black;
@@ -34,6 +36,6 @@
     transition: left 500ms;
   }
   .activeTabEarn {
-    left: calc(50%);
+    left: calc(50% + 10px);
   }
 }

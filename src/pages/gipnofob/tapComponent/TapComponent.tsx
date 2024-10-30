@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import Gipnofob1 from '../../../img/gipnofob_1.jpg'
+import Baget from '../../../img/baget1.png'
 import styles from './TapComponent.module.less'
 import { Score } from './score/Score'
 import { debounce } from 'lodash'
-import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { useAppDispatch, useAppSelector, useTelegram } from '../../../hooks'
 import { save } from '../../../store/gipnofob/actions'
 
+const { id: tgId } = useTelegram()
+
 const sendToBack = (number: number, dispatch: any) => {
-  // @ts-ignore
-  dispatch(save(number))
+  if (!tgId) {
+    dispatch(save({ id: 3, score: number }))
+    return
+  }
+  dispatch(save({ id: tgId, score: number }))
   console.log(number)
 }
 
@@ -38,6 +44,7 @@ export const TapComponent = () => {
     <div>
       <div className={styles.tapIconWrapper}>
         <Score currentScore={currentScore} />
+        <img className={styles.baget} src={Baget} alt={'baget'} />
         <img className={styles.tapIcon} src={Gipnofob1} alt={'1'} onClick={onIconClick} />
       </div>
     </div>

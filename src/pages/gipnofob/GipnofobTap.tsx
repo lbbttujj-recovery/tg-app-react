@@ -7,11 +7,10 @@ import { useAppDispatch, useTelegram } from '../../hooks'
 import { getScore } from '../../store/gipnofob/actions'
 
 export const GipnofobTap = () => {
-  const { user } = useTelegram()
+  const { user, id } = useTelegram()
   const dispatch = useAppDispatch()
   useEffect(() => {
-    console.log('sdf')
-    dispatch(getScore())
+    dispatch(getScore(id || 3))
   }, [dispatch])
   return (
     <div className={styles.app}>
