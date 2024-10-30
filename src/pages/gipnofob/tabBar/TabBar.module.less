@@ -1,41 +1,50 @@
+@import url('../../../variables.module');
+
 .tabBar {
   position: absolute;
   border-radius: 25px;
+  opacity: 90%;
   bottom: 5px;
-  left: 5px;
+  left: 10px;
   height: 70px;
-  width: calc(100% - 10px);
+  width: calc(100% - 20px);
   background-color: #393939;
   display: flex;
 
   .tab {
     width: 100%;
-    font-size: 18px;
+    font-size: 19px;
+    font-weight: 550;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: color 500ms;
 
     p {
-      z-index: 20;
+      z-index: 1;
     }
   }
 
   .active {
-    color: #e0e0e0;
+    color: @primary-text;
   }
 
   .activeTab {
     position: absolute;
     left: 0;
-    width: calc(50% - 10px);
+    width: calc(33% - 10px);
     height: 100%;
     background-color: black;
-    color: #e0e0e0;
+    color: @primary-text;
     border-radius: 25px;
     transition: left 500ms;
-  }
-  .activeTabEarn {
-    left: calc(50% + 10px);
+
+    &Earn {
+      left: calc(33% + 5px);
+    }
+
+    &Exercise {
+      left: calc(66% + 15px);
+    }
   }
 }

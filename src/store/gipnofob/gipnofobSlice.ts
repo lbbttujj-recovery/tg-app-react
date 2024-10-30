@@ -5,7 +5,10 @@ type Status = 'success' | 'pending' | 'error' | null
 type initialStateType = {
   score: {
     status: Status
-    data: number
+    data: {
+      score: number
+      perSec: number
+    }
   }
   save: {
     status: Status
@@ -15,7 +18,10 @@ type initialStateType = {
 const initialState: initialStateType = {
   score: {
     status: null,
-    data: 0,
+    data: {
+      score: 0,
+      perSec: 0,
+    },
   },
   save: {
     status: null,

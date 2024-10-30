@@ -12,9 +12,11 @@ export const save = createAsyncThunk<string, { id: number; score: number }>('gip
   return response.data
 })
 
-export const getScore = createAsyncThunk<number, number>('gipnofob/getScore', async (id) => {
+type ScoreResponse = { score: number; perSec: number }
+
+export const getScore = createAsyncThunk<ScoreResponse, number>('gipnofob/getScore', async (id) => {
   const params = new URLSearchParams([['id', `${id}`]])
   const backUrl = useBackUrl()
-  const response = (await axios.get(`${backUrl}/api/gipnofob/getScore`, { params })) as AxiosResponse<number>
+  const response = (await axios.get(`${backUrl}/api/gipnofob/getScore`, { params })) as AxiosResponse<ScoreResponse>
   return response.data
 })
