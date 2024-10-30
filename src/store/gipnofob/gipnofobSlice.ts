@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getScore, save } from './actions'
+import { checkSubscribe, getScore, save } from './actions'
 type Status = 'success' | 'pending' | 'error' | null
 
 type initialStateType = {
@@ -13,6 +13,10 @@ type initialStateType = {
   save: {
     status: Status
   }
+  checkSubscribe: {
+    status: Status
+    data: string
+  }
 }
 
 const initialState: initialStateType = {
@@ -25,6 +29,10 @@ const initialState: initialStateType = {
   },
   save: {
     status: null,
+  },
+  checkSubscribe: {
+    status: null,
+    data: '',
   },
 }
 
@@ -52,6 +60,17 @@ export const gipnofobSlice = createSlice({
     })
     builder.addCase(save.fulfilled, (state) => {
       state.score.status = 'success'
+    })
+
+    builder.addCase(checkSubscribe.pending, (state) => {
+      state.score.status = 'pending'
+    })
+    builder.addCase(checkSubscribe.rejected, (state) => {
+      state.score.status = 'error'
+    })
+    builder.addCase(checkSubscribe.fulfilled, (state, action) => {
+      state.score.status = 'success'
+      state.checkSubscribe.data = action.payload
     })
   },
 })

@@ -12,6 +12,17 @@ export const save = createAsyncThunk<string, { id: number; score: number }>('gip
   return response.data
 })
 
+export const checkSubscribe = createAsyncThunk<string, { id: number; groupId: number }>('gipnofob/save', async (params) => {
+  const backUrl = useBackUrl()
+  const response = (await axios.post(`${backUrl}/api/gipnofob/checkSubscribe`, params, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })) as AxiosResponse<string>
+  console.log(response)
+  return response.data
+})
+
 type ScoreResponse = { score: number; perSec: number }
 
 export const getScore = createAsyncThunk<ScoreResponse, number>('gipnofob/getScore', async (id) => {
