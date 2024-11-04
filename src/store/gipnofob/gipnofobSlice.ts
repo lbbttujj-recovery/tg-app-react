@@ -15,7 +15,7 @@ type initialStateType = {
   }
   checkSubscribe: {
     status: Status
-    data: string
+    data: boolean | null
   }
 }
 
@@ -32,7 +32,7 @@ const initialState: initialStateType = {
   },
   checkSubscribe: {
     status: null,
-    data: '',
+    data: null,
   },
 }
 

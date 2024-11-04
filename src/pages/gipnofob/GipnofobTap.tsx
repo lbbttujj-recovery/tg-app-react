@@ -14,8 +14,7 @@ export const GipnofobTap = () => {
   const [activeTab, setActiveTab] = useState<TabNames>('tap')
 
   useEffect(() => {
-    dispatch(getScore(id || 3))
-    console.log('dddd')
+    dispatch(getScore(id || 6950061672))
   }, [dispatch])
   return (
     <div className={styles.app}>
